@@ -1,0 +1,59 @@
+FinalProject
+========================================================
+author: Narges
+date: 3/24/2020
+autosize: true
+
+Introduction
+========================================================
+
+
+- In this project, I use the airquality data. 
+
+- The plot shows the wind speed on different days of September 1973.
+
+- The user can select a range of wind speeds and see in which days 
+the wind speed has been in that range.
+
+- There is also a checkbox that allows the user to choose whether or not 
+they want to view wind speed in all days (or only days with wind speed 
+in the selected range).
+
+
+Wind speed in different days
+========================================================
+
+```{r}
+airq <- airquality
+airq <- airq[which(airq$Month==9),] # only september
+airq$date <- as.Date(paste("1973", airq$Month, airq$Day, sep="-"))
+        
+plot(airq$date, airq$Wind, cex=1, col = "lightgray", lwd=10, xlab = "Date", ylab = "Wind speed")
+```
+
+Days with wind speed in the selected range
+========================================================
+
+Then based on the "wind-speed-range" selected by the user,
+days with wind speed in that range are shown in blue dots.
+For example if selected range is [6,10], the plot looks like the following picture:
+```{r, echo=FALSE}
+airq <- airquality
+airq <- airq[which(airq$Month==9),] # only september
+airq$date <- as.Date(paste("1973", airq$Month, airq$Day, sep="-"))
+plot(airq$date, airq$Wind, cex=1, col = "lightgray", lwd=10, xlab = "Date", ylab = "Wind speed")
+airq <- airq[which((airq$Wind >= 6) & (airq$Wind <= 10)),]
+points(airq$date, airq$Wind, col="blue", cex=1, lwd=10)
+```
+
+other days (not in the range) can be hidden
+========================================================
+
+```{r, echo=FALSE}
+airq <- airquality
+airq <- airq[which(airq$Month==9),] # only september
+airq$date <- as.Date(paste("1973", airq$Month, airq$Day, sep="-"))
+plot(airq$date, airq$Wind, cex=1, col = "white", lwd=10, xlab = "Date", ylab = "Wind speed")
+airq <- airq[which((airq$Wind >= 6) & (airq$Wind <= 10)),]
+points(airq$date, airq$Wind, col="blue", cex=1, lwd=10)
+```
